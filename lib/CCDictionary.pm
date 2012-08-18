@@ -3,7 +3,7 @@ use utf8; #  this file is utf8
 use Lingua::ZH::CCDICT;
 use strict;
 use warnings;
-use diagnostics;
+#use diagnostics;
 #enable unicode print
 #binmode STDOUT, ":utf8";
 
