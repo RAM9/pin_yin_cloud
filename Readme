@@ -1,3 +1,10 @@
+Hosted on heroku, pass text like this to see a response:
+
+    http://pin-yin-cloud.herokuapp.com/lookup/?unicode=%E5%A5%B3%E5%AD%90
+
+
+== Installation & Setup
+
 sudo -s 'cpan App::cpanminus'
 sudo -s 'cpanm Lingua::ZH::CCDICT'
 
@@ -9,6 +16,14 @@ sudo -s 'curl -L cpanmin.us |perl - Mojolicious'
 
 # install heroku deploy tools for mojo
 sudo -s 'curl -L tempi.re/bundles/mojo-deploy-heroku | sh'
+
+We use Perloku to run it on heroku.  To run the server locally:
+
+chmod +x Perloku
+PORT=3000 ./Perloku
+
+
+== How the app was created
 
 # create a new mojo app
 #
