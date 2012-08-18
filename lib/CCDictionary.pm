@@ -22,15 +22,13 @@ sub jsonItem {
   };
 
    if ($item->pinyin) {
-     $data->(
-       'pinyin' => {
-         'romanized' => {
-           'unicode'  => 1,
-           'ascii'    => 2,
-           'syllable' => 3
-         }
+     $data->{pinyin} = {
+       'romanized' => {
+         'unicode'  => $item->pinyin->as_unicode(),
+         'ascii'    => $item->pinyin->as_ascii(),
+         'syllable' => $item->pinyin->syllable()
        }
-     ); 
+     };
 
    }
   return $data;
@@ -42,9 +40,13 @@ sub jsonResult {
   while(my $item = $set->next()) {
     push(@itemsAsJson, jsonItem($item));
   }
-
-  return {
-    'results' => @itemsAsJson
+  my $length = @itemsAsJson; 
+  if ($length > 0) {
+    return {
+      'results' => [@itemsAsJson]
+    };
+  } else {
+   return 0;
   };
 }
 ###
@@ -59,14 +61,24 @@ sub new {
 my $dict = Lingua::ZH::CCDICT->new( storage => 'InMemory' );
 
 sub lookup {
+  my $self = shift;
   my ($query) = @_;
 
   my @unicode_multi_codepoints = unpack("U*",$query);
   my @multi_char = map { chr($_) } @unicode_multi_codepoints;
 
-  my $set = $dict->match_unicode(chr(ord('一')));
-  #return 1;
-  return jsonResult($set);
+  my $set = $dict->match_unicode(@multi_char);
+  my $result = jsonResult($set);
+  if ($result) {
+    return $result;
+  } else {
+    return {
+      'error' => 1,
+      'query' => $query,
+      'unicode_multi_codepoints' => [@unicode_multi_codepoints],
+      'multi_char' => [@multi_char]
+    }
+  }
   # return {'results' => [
   #         {
   #           'unicode' => '一',

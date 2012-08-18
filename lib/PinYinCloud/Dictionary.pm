@@ -12,7 +12,7 @@ sub lookup {
 
   # helper ccdict is defined in the application class 'PinYinCloud.pm'
   # to be the CCDictionary 'model'
-  my $resultsObject = $self->ccdict->lookup($self->param('unicode'));
+  my $resultsObject = $self->ccdict->lookup($self->param('unicode') ||'______BLANK_PARAM___');
   
   $self->render(json => $resultsObject);
 
