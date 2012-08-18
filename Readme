@@ -1,0 +1,33 @@
+sudo -s 'cpan App::cpanminus'
+sudo -s 'cpanm Lingua::ZH::CCDICT'
+
+#--
+#installing for mojo for web  development as a system tool:
+
+sudo -s 'curl -L cpanmin.us |perl - Mojolicious'
+# taken from https://github.com/kraih/mojo/wiki/Installation
+
+# install heroku deploy tools for mojo
+sudo -s 'curl -L tempi.re/bundles/mojo-deploy-heroku | sh'
+
+# create a new mojo app
+#
+# note : lite_app didn't work with mojo-deploy-heroku when
+# I tried - I think it expects the lite app to have a package declared
+#
+mojo generate app PinYinCloud
+cd pin_yin_cloud
+
+# create a new heroku app named pin-yin-cloud or deploy to an existing app named 'pin-yin-cloud'
+./script/pin_yin_cloud deploy heroku --appname pin-yin-cloud
+
+# then this is live
+http://pin-yin-cloud.herokuapp.com/
+
+# I then modified Makefile.PL
+# and added 'Lingua::ZH::CCDICT' => '0.05'
+# to the PREREQ_PM 'map' (hash)
+# and re-deployed
+#
+./script/pin_yin_cloud deploy heroku --appname pin-yin-cloud
+
