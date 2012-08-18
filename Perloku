@@ -1,0 +1,2 @@
+#!/bin/sh
+./script/pin_yin_cloud daemon --listen http://*:$PORT --mode production
