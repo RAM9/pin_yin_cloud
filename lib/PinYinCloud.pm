@@ -15,6 +15,7 @@ sub startup {
   my $dict = CCDictionary->new;
 
   $self->helper(ccdict => sub { return $dict });
+  $self->types->type(json => 'text/plain; charset=utf-8');
 
   # Router
   my $r = $self->routes;
