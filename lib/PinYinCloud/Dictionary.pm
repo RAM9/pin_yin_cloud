@@ -14,7 +14,7 @@ sub lookup {
   # to be the CCDictionary 'model'
   my $resultsObject = $self->ccdict->lookup($self->param('unicode') ||'______BLANK_PARAM___');
   
-  $self->render(json => $resultsObject, format => 'json');
+  $self->render(json => $resultsObject);
 
 }
 
