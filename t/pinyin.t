@@ -1,3 +1,6 @@
+#use utf8;
+# Why can't i turn on UTF8 in my test suit without the wide character error in syswrite?
+#
 use Mojo::Base -strict;
 
 use Test::More tests => 22;
